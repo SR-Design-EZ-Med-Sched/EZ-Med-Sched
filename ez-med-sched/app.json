@@ -1,0 +1,12 @@
+{
+  "name": "ez-med-sched",
+  "displayName": "ez-med-sched",
+  "expo": {
+    "name": "ez-med-sched",
+    "slug": "ez-med-sched",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
