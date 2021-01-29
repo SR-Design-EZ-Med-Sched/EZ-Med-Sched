@@ -3,3 +3,7 @@ Repo for Senior project
 
 
 Trello: https://trello.com/b/6D98Tt77/ezmedsched
+
+https://docs.expo.io/get-started/installation/
+
+
