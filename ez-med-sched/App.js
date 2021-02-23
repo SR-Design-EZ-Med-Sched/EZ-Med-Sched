@@ -14,10 +14,11 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-//import uuid from 'uuid';
+import uuid from 'uuid';
 import { nanoid } from 'nanoid/non-secure';
 import Environment from './config/environment';
 import firebase from './config/firebase';
+import '@firebase/storage';
 
 export default class App extends React.Component {
 	state = {
@@ -49,7 +50,7 @@ export default class App extends React.Component {
 					<View style={styles.helpContainer}>
 						<Button
 							onPress={this._pickImage}
-							title="Pick an image from camera roll"
+							title="Take from Camera Roll"
 						/>
 
 						<Button onPress={this._takePhoto} title="Take a photo" />
