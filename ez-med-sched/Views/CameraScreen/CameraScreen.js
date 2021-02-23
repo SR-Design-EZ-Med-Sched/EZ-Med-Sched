@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
-const HomeScreen = () => (
+const CameraScreen = () => (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
+        <Text>Camera!</Text>
     </View>);
 
 
 
-export default HomeScreen;
+export default CameraScreen;
