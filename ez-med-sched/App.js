@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import NLClassifications from './NaturalLanguageAPI.js'
 
 export default function App() {
   return (
@@ -18,4 +19,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+});
+
+const NLCategories = NLClassifications.forEach(category => {
+  console.log(`Name: ${category.name}, Confidence: ${category.confidence}`);
 });
