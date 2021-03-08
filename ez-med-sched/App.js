@@ -14,11 +14,12 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import uuid from 'uuid';
+//import uuid from 'uuid';
 import { nanoid } from 'nanoid/non-secure';
 import Environment from './config/environment';
 import firebase from './config/firebase';
 import '@firebase/storage';
+import '@firebase/database';
 
 export default class App extends React.Component {
 	state = {
@@ -147,7 +148,7 @@ export default class App extends React.Component {
 						onLongPress={this._share}
 						style={{ paddingVertical: 10, paddingHorizontal: 10 }}
 					>
-						JSON.stringify(googleResponse.responses)
+						{googleResponse.responses[0].textAnnotations[0].description}
 					</Text>
 				)}
 			</View>
@@ -215,16 +216,10 @@ export default class App extends React.Component {
 				requests: [
 					{
 						features: [
-							{ type: 'LABEL_DETECTION', maxResults: 10 },
-							//{ type: 'LANDMARK_DETECTION', maxResults: 5 },
-							//{ type: 'FACE_DETECTION', maxResults: 5 },
-							//{ type: 'LOGO_DETECTION', maxResults: 5 },
-							{ type: 'TEXT_DETECTION', maxResults: 5 },
-							{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
-							//{ type: 'SAFE_SEARCH_DETECTION', maxResults: 5 },
-							{ type: 'IMAGE_PROPERTIES', maxResults: 5 },
-							//{ type: 'CROP_HINTS', maxResults: 5 },
-							//{ type: 'WEB_DETECTION', maxResults: 5 }
+							//{ type: 'LABEL_DETECTION', maxResults: 10 },
+							{ type: 'TEXT_DETECTION', maxResults: 20 },
+							//{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 5 },
+							//{ type: 'SAFE_SEARCH_DETECTION', maxResults: 5 }
 						],
 						image: {
 							source: {
@@ -234,7 +229,8 @@ export default class App extends React.Component {
 					}
 				]
 			});
-			let response = await fetch(
+		
+				let response = await fetch(
 				'https://vision.googleapis.com/v1/images:annotate?key=' +
 					Environment['GOOGLE_CLOUD_VISION_API_KEY'],
 				{
@@ -247,11 +243,21 @@ export default class App extends React.Component {
 				}
 			);
 			let responseJson = await response.json();
-			console.log(responseJson);
+			let txt = responseJson.responses[0].textAnnotations[0].description;
+			console.log(txt);
 			this.setState({
 				googleResponse: responseJson,
 				uploading: false
 			});
+			//Sends sample object with name of person, username, email, and prescription extracted from picture taken w/ Google Vision API
+			firebase.database().ref('null/').set({
+				Keanu: {
+					username: "kjb32",
+					email: "keanubud0823@gmail.com", 
+					prescription: txt
+				}
+			})
+
 		} catch (error) {
 			console.log(error);
 		}
@@ -285,6 +291,7 @@ async function uploadImageAsync(uri) {
 	return await snapshot.ref.getDownloadURL();
 }
 
+//Front-End styles to change
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
