@@ -229,6 +229,7 @@ export default class App extends React.Component {
 					}
 				]
 			});
+				console.log("Passed in ImageURi is: " + image);
 		
 				let response = await fetch(
 				'https://vision.googleapis.com/v1/images:annotate?key=' +
